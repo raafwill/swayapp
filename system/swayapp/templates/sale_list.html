@@ -1,0 +1,71 @@
+{% block content %}
+
+    <form class="navbar-form navbar-right" action="." method="get">
+        <!-- add -->
+        <a href="{% url 'swayapp:sale_add' %}">
+            <button id="new_sale" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span> Adicionar
+            </button>
+        </a>
+        <!-- search form -->
+        <input id="search_box" name="search_box" type="text" placeholder="Localizar..." class="form-control">
+        <button type="submit" class="btn btn-success form-control"><span class="glyphicon glyphicon-search"></span></button>
+		
+		<div class="text-right">
+		<p>
+			<spam name="filter_sale_zero"><a href="?filter_sale_zero=1">Vendas sem itens</a></spam>
+			<spam name="filter_sale_one" style="padding-left:1.2em"><a href="?filter_sale_one=1">Vendas com um item</a></spam>
+		</p>
+		</div>
+	</form>
+
+	<h1>Lista de Vendas</h1>
+
+{% if object_list %}
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Cliente</th>
+						<th class="text-center">Data da venda</th>
+						<th class="text-center">Itens</th>
+						<th class="text-right">Total</th>
+						<th>Vendedor</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for sale in object_list %}
+					{% if sale.get_items == 0 %}
+						<tr class="danger">
+					{% elif sale.get_items == 1 %}
+						<tr class="info">
+					{% else %}
+						<tr>
+					{% endif %}
+							<td><a href="{{ sale.get_detail }}">{{ sale.codigo }}</a></td>
+							<td>{{ sale.customer.full_name }}</td>
+							<td class="text-center">{{ sale.created|date:"d/m/Y" }}</td>
+							<td class="text-center">{{ sale.get_items }}</td>
+							<td class="text-right">{{ sale.get_total }}</td>
+							<td>{{ sale.seller.full_name }}</td>
+
+						</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+{% else %}
+  <p class="alert alert-warning">Sem itens na lista.</p>
+{% endif %}
+
+<hr>
+<div>
+<h3>{{ object_list|length }} venda{{ object_list|length|pluralize }}</h3>
+<h4><b>Total:</b> {{ page_obj.paginator.count }} venda{{ page_obj.paginator.count|pluralize }}</h4>
+</div>
+
+{% if object_list %}
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% block content %}
+<h1>Lista de Produtos <font size="3"></font></h1>
+
+
+<!-- Modal -->
+
+{% if object_list %}
+<div>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>NCM</th>
+			<th>Produto</th>
+			<th>Marca</th>
+			<th class="text-center">Estoque</th>
+			<th class="text-center">Estoque Min.</th>
+			<th class="text-right">Preço</th>
+			<th class="text-center">Custo Médio</th>
+			<th class="text-center">Preço Recebido</th>
+			<th class="text-center">ID</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for product in object_list %}
+		{% if product.outofline %}
+		<tr class="danger">
+			{% else %}
+		<tr>
+			{% endif %}
+			<td>{{ product.ncm }}</td>
+			<td><a href="{% url 'swayapp:receive' product.id %}"><b>{{ product.product }}</b></a></td>
+			<td>{{ product.brand.brand }}</td>
+			<td class="text-center">{{ product.stock }}</td>
+			<td class="text-center">{{ product.stock_min }}</td>
+			<td class="text-right">{{ product.get_price }}</td>
+			<td class="text-right">{{ product.get_custo_medio }}</td>
+			<td class="text-right">{{ product.received_price }}</td>
+			<!--{% if product.get_ipi == "0" %}-->
+			<!--<td class="text-right">-&#45;&#45;</td>-->
+			<!--{% else %}-->
+			<!--<td class="text-right">{{ product.get_ipi }}%</td>-->
+			<!--{% endif %}-->
+			<td class="text-center">{{product.id}}</a></td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% else %}
+<p class="alert alert-warning">Sem itens na lista.</p>
+{% endif %}
+<hr>
+<div>
+	<h3>{{ object_list|length }} produto{{ object_list|length|pluralize }}</h3>
+	<h4>
+		<b>Total:</b>
+		{{ page_obj.paginator.count }} produto{{ page_obj.paginator.count|pluralize }}</h4>
+</div>
+
+{% if object_list %}
+{% endif %}
+
+{% endblock content %}

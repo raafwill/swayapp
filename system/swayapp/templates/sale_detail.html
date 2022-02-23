@@ -1,0 +1,39 @@
+{% block content %}
+	<h1><b>Venda:</b>{{ Product.product }}</h1>
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>NCM</th>
+						<th>Produto</th>
+						<th class="text-center">Preço</th>
+						<th class="text-right">Quantidade</th>
+						<th class="text-right">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for item in Itens %}
+					<tr>
+						<td>{{ item.product.ncm }} </td>
+						<td>{{ item.product.product }}</a></td>
+						<td class="text-center">{{ item.price_sale_formated }}</td>
+						<td class="text-right">{{ item.quantity }}</td>
+						<td class="text-right">{{ item.subtotal_formated }}</td>
+					</tr>
+				{% empty %}
+					<p>Sem itens na lista.</p>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<hr>
+
+		<h3 class="text-right"><b>Total:</b> <span class="label label-info">{{ Sale.get_total }}</span></h3>
+		<!-- <p class="text-right">Obs: IPI não calculado.</p> -->
+		<p>
+			<a href="{% url 'swayapp:sale_list' %}"><span class="glyphicon glyphicon-chevron-left">Voltar</span></a>
+		</p>
+	</div>
+
+{% endblock content %}
