@@ -58,4 +58,4 @@ class SaleForm(forms.ModelForm):
 class SaleDetailForm(forms.ModelForm):
     class Meta:
         model = SaleDetail
-        fields = '__all__'
+        fields = ['sale', 'product', 'price_sale', 'quantity', 'ipi_sale']

@@ -1,0 +1,31 @@
+{% extends base.html %}
+
+<body>
+
+</body>
+
+
+{% block javascript %}
+
+<script>
+    async function getProducts() {
+    // Django like url in JS
+    let url = '{% url 'product_price' %};
+    try  {
+            // Get the backend JSON result
+            let results = await fetch(url);
+            return await results.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    let productPrice = await getProducts();
+
+    $(document).ready(function() {
+        productPrice = JSON.parse(productPrice);
+    })
+</script>
+
+{% endblock %}
+</html>

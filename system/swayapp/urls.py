@@ -15,5 +15,8 @@ urlpatterns = [
     path('product_list/', views.ProductList.as_view(), name='product_list'),
     path('sale_add/', views.sale_create, name='sale_add'),
     path('<int:pk>/', views.SaleDetailView.as_view(), name='sale_detail'),
-    path('sale/', views.SaleList.as_view(), name='sale_list')
+    path('sale/', views.SaleList.as_view(), name='sale_list'),
+    path('product_price/', views.product_price, name='product_price'),
+
+    path('sale_add/<int:pk>/json/', views.product_json, name='product_json'),
 ]

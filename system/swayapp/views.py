@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, resolve_url
 from .models import Customer, Seller, Product, Sale, SaleDetail
 from .forms import SellerForm, CustomerForm, ReceivedItems, ProductForm, BrandForm, CategoryForm, ReceivedProduct, \
@@ -103,7 +103,7 @@ def receive_product(request, pk):
         instance = form.save(commit=False)
         receiving = receive_item_form.save(commit=False)
         instance.stock += instance.received
-        instance.received_price = instance.received_price + static_price_received
+        instance.received_price = instance.received_price + (static_price_received or 0)
         receiving.product = instance.product
         receiving.unit_price_payd = instance.received_price
         receiving.received_by = instance.received_by
@@ -163,8 +163,13 @@ class ProductList(CounterMixin, ListView):
 def sale_create(request):
     order_forms = Sale()
     item_order_formset = inlineformset_factory(
-        Sale, SaleDetail, form=SaleDetailForm, extra=0, can_delete=False,
-        min_num=1, validate_min=True
+        Sale,
+        SaleDetail,
+        form=SaleDetailForm,
+        extra=0,
+        can_delete=False,
+        min_num=1,
+        validate_min=True
     )
 
     if request.method == 'POST':
@@ -188,6 +193,27 @@ def sale_create(request):
     }
 
     return render(request, 'sale_form.html', context)
+
+
+def autofill(request):
+    if 'term' in request.GET:
+        qs = Product.objects.filter(Product__icontains=request.GET.get('term'))
+        products = list()
+
+        products = [Product.product for product in qs]
+        return JsonResponse(products, safe=False)
+
+    return render(request, 'teste.html')
+
+
+def product_price(request):
+    products = Product.objects.values('product', 'sell_price')
+
+    data_dict = {}
+    for dict in products:
+        data_dict[dict['product']] = dict['sell_price']
+
+    return JsonResponse(data_dict)
 
 
 class SaleList(CounterMixin, ListView):
@@ -226,3 +252,9 @@ class SaleDetailView(DetailView):
         context['count'] = sd.count()
         context['Itens'] = sd
         return context
+
+
+def product_json(request, pk):
+    product = Product.objects.filter(pk=pk)
+    data = [item.to_dict_json() for item in product]
+    return JsonResponse({'data': data})

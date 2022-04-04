@@ -145,6 +145,13 @@ class Product(models.Model):
         else:
             return "R$ %s" % number_format(0, 2)
 
+    def to_dict_json(self):
+        return {
+            'pk': self.pk,
+            'product': self.product,
+            'sell_price': self.sell_price
+        }
+
 
 # seção de criação de modelos de vendas
 class Sale(TimeStampedModel):

@@ -1,5 +1,10 @@
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
 <form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+  <div class="form-group" type="email">
+      {% csrf_token %}
+      {{ form }}
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+

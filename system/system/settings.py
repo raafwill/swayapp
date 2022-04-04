@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'swayapp',
     'users.apps.UsersConfig',
     'bootstrap4',
-    'bootstrapform'
+    'bootstrapform',
+    'crispy_forms',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

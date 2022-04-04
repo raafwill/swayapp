@@ -9,6 +9,12 @@
 {# Adding select2 css #}
 {% block css %}
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<style>
+    .form-control {
+    margin: 10px;
+    }
+</style>
+
  {% endblock %}
 
 {# Adding select2 js #}
@@ -18,11 +24,11 @@
 
 {% block content %}
 
-  <!-- <div class="row">
+  <div class="row">
       <div class="col-md-6 col-md-offset-3">
           <h1 class="page-header text-center lead">Nova Venda</h1>
       </div>
-  </div> -->
+  </div>
   <div class="row">
       <div class="col-xs-10 col-md-12">
           <form action="" method="POST">
@@ -63,6 +69,13 @@
 
     <script>
       $(document).ready(function () {
+        $('#id_product-0-product').addClass('clProduct');
+        $('#id_product-0-quantity').addClass('clQuantity');
+
+        $('label[for="id_product-0-total"]').append('<span id="id_product-0-total-span" class="lead" style="padding-left: 10px;"></span>')
+        $('label[for="id_product-0-total"]').append('<input id="id_product-0-inicial" class="form-control" type="hidden" />')
+        $('.clProduct').select2()})
+
         $("#add-item").click(function (ev) {
           ev.preventDefault();
           var count = $('#order').children().length;
@@ -79,10 +92,50 @@
           }, 800);
           {# Initialize select2 on new select field #}
           $('#id_product-' + (count) + '-product').select2();
-        });
-        {# Initialize select2 on all select tags #}
-        $('select').select2();
+          {# Initialize select2 on all select tags #}
+          $('#id_product-' + (count) + '-product').addClass('clProduct');
+          $('#id_product-' + (count) + '-quantity').addClass('clQuantity');
+
+          $('label[for="id_product-' + (count) + '-total"]').append('<span id="id_product-' + (count) + '-total-span" class="lead" style="padding-left: 10px;"></span>')
+          $('label[for="id_product-' + (count) + '-total"]').append('<input id="id_product-' + (count) + '-inicial" class="form-control" type="hidden" />')
+          $('.clProduct').select2();
       });
+
+      let product
+      let price_sale
+      let quantity
+      let ipi_sale
+      let campo
+
+      $(document).on('change', '.clProduct', function(){
+          let self = $(this)
+          let pk = $(this).val()
+          let url = pk + '/json/'
+
+          $.ajax({
+              url: url,
+              type: 'GET',
+              success: function(response) {
+                  product = response.data[0].product
+                  sell_price = response.data[0].sell_price
+                  campo = self.attr('id').replace('product', 'quantity')
+
+                  $('#'+campo).val('')
+              },
+              error: function(xhr){
+
+              }
+          })
+      });
+
+      $(document).on('change', '.clQuantity', function() {
+          quantity = $(this).val();
+          price_sale = Number(sell_price);
+          total = Number(sell_price) * Number(quantity)
+          campo = $(this).attr('id').replace('quantity', 'price_sale', 'total')
+          $('#'+campo).val(price_sale)
+      });
+
     </script>
 
     <script type="text/html" id="item-order">
