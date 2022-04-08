@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   {% load static %}
@@ -13,22 +13,18 @@
     <title>Vendas</title>
   {% endblock title %}
 
-  <!-- Bootstrap core CSS -->
-<!--  <link href="{% static 'css/bootstrap.css.map' %}" rel="stylesheet">-->
-  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-<!--  <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">-->
-  <!-- <link href="{% static "css/thumbnail-gallery.css" %}" rel="stylesheet"> -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
   <style type="text/css">
     /* Move down content because we have a fixed navbar that is 50px tall */
     body {
-      padding-top: 50px;
+      padding-top: 0;
       padding-bottom: 40px;
       color: #5a5a5a;
     }
   </style>
 
-  {% block css %}{% endblock %}
+    {% block css %}{% endblock %}
 
   <!-- Bootstrap core JavaScript
   ================================================== -->
@@ -37,50 +33,63 @@
   <script src="{% static 'js/jquery.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/angular.js' %}"></script>
-
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="/static/js/html5shiv.js"></script>
-      <script src="/static/js/respond.min.js"></script>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
     <![endif]-->
-
   {% block js %}{% endblock %}
-
 </head>
 
 
 <!-- <body ng-app="base"> -->
 <body>
 
+<ul class="navbar">
+    <li><a class="active">Sway</a></li>
+    <li><a>Dashboard</a></li>
+    <li><a>Persona</a></li>
+    <li><a>Suporte</a></li>
+  </ul>
 
-<br>
-<br>
 
-<div class="container">
+<div id="main">
+		<div id="mySidenav" class="sidenav">
 
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="{% url 'swayapp:sale_list' %}" >Vendas</a>
+			<a href="{% url 'swayapp:product_list' %}">Produtos</a>
+			<a href="#">Clientes</a>
+			<a href="#">Sellers</a>
+			<a href="#">Staff</a>
+            <p id="id-times" class="intimes">
+                    Boa Noite!
+            </p>
+		</div>
 
-  {% block content %}
+	<span style="font-size:30px;cursor:pointer;padding:1" onclick="openNav()">&#9776;</span>
 
-  {% endblock content %}
+    {% block content %}
 
-<!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="row clearfix">
-        <div class="col-md-12 column">
-          <hr>
-          <p class="pull-right">
-            <a href="#"><span class="glyphicon glyphicon-chevron-up">Topo</span></a>
-          </p>
-          <p>Smart2B &copy; 2021 &middot; Gestão é Resultado!
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/br/80x15.png"/></a>
-            all rights reserved.
-          </p>
+    {% endblock content %}
+
+    <footer>
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <hr>
+                    <p class="pull-right">
+                        <a href="#"><span class="glyphicon glyphicon-chevron-up">Topo</span></a>
+                    </p>
+                    <p>Smart2B &copy; 2021 &middot; Gestão é Resultado!
+                        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/br/80x15.png"/></a>
+                       all rights reserved.
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
-</div> <!-- /container -->
+    </footer>
+</div>
 
 
 <script>
@@ -89,12 +98,25 @@
   }
   Global.angular_dependencies = {% block angulardependencies %}[
     ]{% endblock angulardependencies %};
+
+    function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+
+if (new Date().getHours() <= 12) {
+  document.getElementById("id-times").innerHTML = "Bom Dia!";
+}
+else if (new Date().getHours() <= 17) {
+  document.getElementById("id-times").innerHTML = "Boa Tarde";
+  }
+
 </script>
-
-<script src="{% static 'js/app/base.js' %}"></script>
-<script src="{% static 'js/app/vendas.js' %}"></script>
-<script src="{% static 'js/app/api.js' %}"></script>
-
 
 </body>
 </html>

@@ -187,6 +187,10 @@ def sale_create(request):
         forms = SaleForm(instance=order_forms, prefix='main')
         formset = item_order_formset(instance=order_forms, prefix='product')
 
+        return render(request, 'sale_form.html', {
+        'forms': forms,
+        'formset': formset})
+
     context = {
         'forms': forms,
         'formset': formset

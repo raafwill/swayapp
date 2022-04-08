@@ -1,6 +1,49 @@
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    {{ receive_item_form }}
-    <input type="submit" value="Submit">
-</form>
+{% extends 'base.html' %}
+{% block content %}
+{% load widget_tweaks %}
+
+
+<h1 class="willianclass">Entrada de Itens</h1>
+<form action="." method="POST">
+				<div class="row">
+                    <div class="col-100">
+                        <div class="bloco-form">
+							<label class="label-id" for="{{ receive_item_form.product.id_for_label }}">Produto:</label>
+							{% csrf_token %}
+							{{ receive_item_form.product |add_class:"input-custom" }}
+							{{ form.product |add_class:"input-custom" }}
+                        </div>
+                    </div>
+					<div class="col-50">
+						<div class="bloco-form">
+							<label class="label-id" for="{{ receive_item_form.received.id_for_label }}">Qtd Recebida.:</label>
+								{% csrf_token %}
+								{{ receive_item_form.received |add_class:"input-custom"}}
+								{{ form.received |add_class:"input-custom"}}
+						</div>
+						<div class="bloco-form">
+							<label class="label-id" for="{{ receive_item_form.received_price.id_for_label }}">Preço Recebido:</label>
+							{% csrf_token %}
+							{{ receive_item_form.received_price |add_class:"input-custom"}}
+							{{ form.received_price |add_class:"input-custom"}}
+						</div>
+					</div>
+					<div class="col-50">
+						<div class="bloco-form">
+							<label class="label-id" for="{{ receive_item_form.received_by.id_for_label }}">Recebido Por:</label>
+							{% csrf_token %}
+							{{ receive_item_form.received_by |add_class:"input-custom"}}
+							{{ form.received_by |add_class:"input-custom"}}
+						</div>
+					</div>
+				</div>
+
+				<button class="btn-save" type="submit">Save changes</button>
+			</form>
+
+<p id="ptest">
+    OLA MEU BROTHER
+</p>
+
+
+{% endblock content %}

@@ -1,25 +1,35 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block content %}
 
-    <form class="navbar-form navbar-right" action="." method="get">
-        <!-- add -->
-        <a href="{% url 'swayapp:sale_add' %}">
-            <button id="new_sale" type="button" class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span> Adicionar
-            </button>
-        </a>
-        <!-- search form -->
-        <input id="search_box" name="search_box" type="text" placeholder="Localizar..." class="form-control">
-        <button type="submit" class="btn btn-success form-control"><span class="glyphicon glyphicon-search"></span></button>
-		
-		<div class="text-right">
-		<p>
-			<spam name="filter_sale_zero"><a href="?filter_sale_zero=1">Vendas sem itens</a></spam>
-			<spam name="filter_sale_one" style="padding-left:1.2em"><a href="?filter_sale_one=1">Vendas com um item</a></spam>
-		</p>
-		</div>
-	</form>
 
-	<h1>Lista de Vendas</h1>
+
+
+<!--search box-->
+<!--    <form action="." method="get">-->
+<!--        &lt;!&ndash; add &ndash;&gt;-->
+
+
+<!--        &lt;!&ndash; search form &ndash;&gt;-->
+<!--        <input id="search_box" name="search_box" type="text" placeholder="Localizar..." class="form-control">-->
+<!--        <button type="submit" class="btn btn-success form-control"><span class="glyphicon glyphicon-search"></span></button>-->
+<!--		-->
+<!--		<div class="text-right">-->
+<!--		<p>-->
+<!--			<spam name="filter_sale_zero"><a href="?filter_sale_zero=1">Vendas sem itens</a></spam>-->
+<!--			<spam name="filter_sale_one" style="padding-left:1.2em"><a href="?filter_sale_one=1">Vendas com um item</a></spam>-->
+<!--		</p>-->
+<!--		</div>-->
+<!--	</form>-->
+
+<a href="{% url 'swayapp:sale_add' %}">
+	<button class="addbutton">
+	Nova Venda
+	</button>
+</a>
+<h1 class="willianclass">Lista de Vendas</h1>
+
+
 
 {% if object_list %}
 		<div>

@@ -1,0 +1,35 @@
+    <ul class="navbar">
+        <li><a class="active">Sway</a></li>
+        <li><a>Dashboard</a></li>
+        <li><a>Persona</a></li>
+        <li><a>Suporte</a></li>
+    </ul>
+
+
+    <div id="main">
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="#">Vendas</a>
+                <a href="#">Produtos</a>
+                <a href="#">Clientes</a>
+                <a href="#">Sellers</a>
+                <a href="#">Staff</a>
+            </div>
+
+        <span style="font-size:30px;cursor:pointer;padding:1" onclick="openNav()">&#9776;</span>
+
+
+
+    </div>
+
+<script>
+  function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>

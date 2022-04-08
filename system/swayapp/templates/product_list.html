@@ -1,405 +1,117 @@
-<html>
-{% block content %}
-
+{% extends 'base.html' %}
 {% load widget_tweaks %}
-
-<style>
-html {
-    font-family: "Lato", sans-serif;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-}
-
-.willianclass {
-	color: #04AA6D;
-	margin-top: 63;
-	margin-left 5;
-	}
-
-
-.navbar{
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #f8f9fa;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	color: black;
-	height: 63;
-	z-index: 1;
-}
-
-span {
-	float: left;
-	margin-top: 63;
-	padding: 50;
-	margin-right: 20;
-}
-
-li {
-	float: left;
-	}
-
-.navbar>li>a{
-	display: block;
-	text-align: center;
-	padding: 24px 24px;
-	text-decoration: none;
-}
-
-.navbar>li>a:hover:not(.active){
-	background-color: #111;
-	color: white;
-}
-
-.active {
-background-color: #04AA6D;
-color: white;
-
-}
-
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 63;
-    bottom: 0;
-    left: 0;
-    background-color: #111;
-    overflow: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    background-color: black;
-    text-decoration: none;
-    font-size: 25px;
-    z-index: 1;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-    border-bottom: 2px solid #111;
-}
-
-.sidenav a:hover{
-    color: black;
-    background-color: #a7cdec;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    font-size: 36px;
-    width: 100%;
-    background-color: black;
-    float: right;
-}
-
-#main {
-    transition: margin-left .5s;
-    padding: 16px;
-}
-
-
-@media screen and (max-height: 450px){
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-
-}
-
-    table{
-      width: 98%;
-      border-color: green;
-      border-spacing: 0;
-      border-collapse: collapse;
-      margin-top: 2px;
-      margin-left: 10px
-      margin-right: 10px
-  }
-
-  th{
-      height: 30px;
-      color: white;
-      text-align: left;
-      vertical-align: middle;
-      background-color: #04AA6D;
-      padding: 5px;
-      position: -webkit-sticky;
-      top: 0;
-  }
-
-
-  td{
-      height: 10px;
-      padding: 10px;
-  }
-
-  tr:hover {
-  background-color: a7cdec;
-  color: black;
-  }
-
-  tr:nth-child(even) {background-color: #f2f2f2;}
-
-  .addbutton{
-    background-color: #04AA6D;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    float: right;
-    margin-top: 56;
-    margin-right: 20;
-}
-
-/* renderizando modal de form */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.modal-content {
-  background-color: #082a331f;
-  margin: 1% auto; /* 1% from the top and centered */
-  padding: 20px;
-  width: 50%; /* Could be more or less, depending on screen size */
-}
-
-.modal-header{
-    padding: 15px 16px;
-    background-color: #04AA6D;
-    color: white;
-}
-
-.modal-body{
-    padding: 40;
-  	border-radius: 5px;
-  	background-color: #f2f2f2;
-}
-
-.close-modal {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-
-.bloco-form{
-  padding: 10px;
-}
-
-
-.input-custom {
-  width: 100%;
-  padding: 7px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical;
-	}
-
-.btn-save{
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-    }
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
-
-.col-100 {
-  -ms-flex: 100%; /* IE10 */
-  flex: 100%;
-}
-
-
-</style>
-
-<head>
-	{% load static %}
-	{% block css %}
-	<script src="/static/js/html5shiv.js"></script>
-	<script src="/static/js/respond.min.js"></script>
-	{% endblock %}
-	<script src="{% static 'js/jquery.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/angular.js' %}"></script>
-
-	{% block js %}{% endblock %}
-
-</head>
-
-
-
+{% block content %}
 <body>
+<button type="button"
+	class="addbutton"
+	data-toggle="modal"
+	data-target="#exampleModalScrollable">
+	Novo
+</button>
 
-<ul class="navbar">
-    <li><a class="active">Sway</a></li>
-    <li><a>Dashboard</a></li>
-    <li><a>Persona</a></li>
-    <li><a>Suporte</a></li>
-  </ul>
+<h1 class="willianclass">Produtos</h1>
 
 
-<div id="main">
-		<div id="mySidenav" class="sidenav">
-
-			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a href="#">Vendas</a>
-			<a href="#">Produtos</a>
-			<a href="#">Clientes</a>
-			<a href="#">Sellers</a>
-			<a href="#">Staff</a>
+<div id="exampleModalScrollable" aria-hidden="true" class="modal">
+	<div class="modal-content">
+		<div class="modal-header">Adicione um Produto
+			<div class="close-modal" data-dismiss="modal">&times;</div>
 		</div>
-
-	<span style="font-size:30px;cursor:pointer;padding:1" onclick="openNav()">&#9776;</span>
-		<button type="button"
-			class="addbutton"
-			data-toggle="modal"
-			data-target="#exampleModalScrollable">
-		Novo Produto
-	</button>
-	<h1 class="willianclass">Produtos</h1>
-
-	<div id="exampleModalScrollable" aria-hidden="true" class="modal">
-		<div class="modal-content">
-			<div class="modal-header">Adicione um Produto
-				<div class="close-modal" data-dismiss="modal">&times;</div>
-			</div>
-			<div class="modal-body">
-				<form action="." method="POST">
-					<div class="row">
-						<div class="col-100">
-							<div class="bloco-form">
-								<label class="label-id" for="{{ form.product.id_for_label }}">Produto:</label>
-								{% csrf_token %}
-								{{ form.product |add_class:"input-custom" }}
-							</div>
-						</div>
-						<div class="col-50">
-							<div class="bloco-form">
-								<label class="label-id" for="{{ form.ncm.id_for_label }}">NCM:</label>
-								{% csrf_token %}
-								{{ form.ncm |add_class:"input-custom" }}
-							</div>
-							<div class="bloco-form">
-								<label class="label-id" for="{{ form.brand.id_for_label }}">Marca:</label>
-								{% csrf_token %}
-								{{ form.brand |add_class:"input-custom"}}
-							</div>
-							<div class="bloco-form">
-								<label class="label-id" for="{{ form.category.id_for_label }}">Categoria:</label>
-								{% csrf_token %}
-								{{ form.category |add_class:"input-custom"}}
-							</div>
-						</div>
-						<div class="col-50">
-							<div class="bloco-form">
-								<label class="label-id" for="{{ form.stock_min.id_for_label }}">Estoque Min.:</label>
-									{% csrf_token %}
-									{{ form.stock_min |add_class:"input-custom"}}
-							</div>
-							<div class="bloco-form">
-								<label class="label-id" for="{{ form.sell_price.id_for_label }}">Preço venda:</label>
-								{% csrf_token %}
-								{{ form.sell_price |add_class:"input-custom"}}
-							</div>
+		<div class="modal-body">
+			<form action="." method="POST">
+				<div class="row">
+					<div class="col-100">
+						<div class="bloco-form">
+							<label class="label-id" for="{{ form.product.id_for_label }}">Produto:</label>
+							{% csrf_token %}
+							{{ form.product |add_class:"input-custom" }}
 						</div>
 					</div>
+					<div class="col-50">
+						<div class="bloco-form">
+							<label class="label-id" for="{{ form.ncm.id_for_label }}">NCM:</label>
+							{% csrf_token %}
+							{{ form.ncm |add_class:"input-custom" }}
+						</div>
+						<div class="bloco-form">
+							<label class="label-id" for="{{ form.brand.id_for_label }}">Marca:</label>
+							{% csrf_token %}
+							{{ form.brand |add_class:"input-custom"}}
+						</div>
+						<div class="bloco-form">
+							<label class="label-id" for="{{ form.category.id_for_label }}">Categoria:</label>
+							{% csrf_token %}
+							{{ form.category |add_class:"input-custom"}}
+						</div>
+					</div>
+					<div class="col-50">
+						<div class="bloco-form">
+							<label class="label-id" for="{{ form.stock_min.id_for_label }}">Estoque Min.:</label>
+								{% csrf_token %}
+								{{ form.stock_min |add_class:"input-custom"}}
+						</div>
+						<div class="bloco-form">
+							<label class="label-id" for="{{ form.sell_price.id_for_label }}">Preço venda:</label>
+							{% csrf_token %}
+							{{ form.sell_price |add_class:"input-custom"}}
+						</div>
+					</div>
+				</div>
 
-					<button class="btn-save" type="submit">Save changes</button>
-				</form>
-			</div>
+				<button class="btn-save" type="submit">Save changes</button>
+			</form>
 		</div>
 	</div>
+</div>
 
 
-	{% if object_list %}
-	<div>
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th>NCM</th>
-				<th>Produto</th>
-				<th>Marca</th>
-				<th class="text-center">Estoque</th>
-				<th class="text-center">Estoque Min.</th>
-				<th class="text-right">Preço</th>
-				<th class="text-center">Custo Médio</th>
-				<th class="text-center">Preço Recebido</th>
-				<th class="text-center">ID</th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for product in object_list %}
-			{% if product.outofline %}
-			<tr class="danger">
-				{% else %}
-			<tr>
-				{% endif %}
-				<td>{{ product.ncm }}</td>
-				<td><b>{{ product.product }}</b></td>
-				<td>{{ product.brand.brand }}</td>
-				<td class="text-center">{{ product.stock }}</td>
-				<td class="text-center">{{ product.stock_min }}</td>
-				<td class="text-right">{{ product.get_price }}</td>
-				<td class="text-right">{{ product.get_custo_medio }}</td>
-				<td class="text-right">{{ product.received_price }}</td>
-				<!--{% if product.get_ipi == "0" %}-->
-				<!--<td class="text-right">-&#45;&#45;</td>-->
-				<!--{% else %}-->
-				<!--<td class="text-right">{{ product.get_ipi }}%</td>-->
-				<!--{% endif %}-->
-				<td class="text-center"><a href="{% url 'swayapp:receive' product.id %}">{{product.id}}</a></td>
-			</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-	</div>
+{% if object_list %}
+<div>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>NCM</th>
+			<th>Produto</th>
+			<th>Marca</th>
+			<th class="text-center">Estoque</th>
+			<th class="text-center">Estoque Min.</th>
+			<th class="text-right">Preço</th>
+			<th class="text-center">Custo Médio</th>
+			<th class="text-center">Preço Recebido</th>
+			<th class="text-center">ID</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for product in object_list %}
+		{% if product.outofline %}
+		<tr class="danger">
+			{% else %}
+		<tr>
+			{% endif %}
+			<td>{{ product.ncm }}</td>
+			<td><b>{{ product.product }}</b></td>
+			<td>{{ product.brand.brand }}</td>
+			<td class="text-center">{{ product.stock }}</td>
+			<td class="text-center">{{ product.stock_min }}</td>
+			<td class="text-right">{{ product.get_price }}</td>
+			<td class="text-right">{{ product.get_custo_medio }}</td>
+			<td class="text-right">{{ product.received_price }}</td>
+			<!--{% if product.get_ipi == "0" %}-->
+			<!--<td class="text-right">-&#45;&#45;</td>-->
+			<!--{% else %}-->
+			<!--<td class="text-right">{{ product.get_ipi }}%</td>-->
+			<!--{% endif %}-->
+			<td class="text-center"><a href="{% url 'swayapp:receive' product.id %}">{{product.id}}</a></td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
 
-	{% else %}
+{% else %}
 
-	<p class="alert alert-warning">Sem itens na lista.</p>
-	{% endif %}
+<p class="alert alert-warning">Sem itens na lista.</p>
+{% endif %}
 
 	<hr>
 	<div>
@@ -409,22 +121,8 @@ color: white;
 			{{ page_obj.paginator.count }} produto{{ page_obj.paginator.count|pluralize }}
 		</h4>
 	</div>
-	{% if object_list %}
-	{% endif %}
-	{% endblock content %}
-</div>
-
-<script>
-  function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginLeft= "0";
-}
-</script>
+{% if object_list %}
+{% endif %}
 
 </body>
-</html>
+{% endblock content %}
