@@ -25,7 +25,7 @@ html {
 	z-index: 1;
 }
 
-span {
+.free-span {
 	float: left;
 	margin-top: 63;
 	padding: 50;
@@ -204,6 +204,7 @@ color: white;
 }
 
 
+
 .input-custom {
   width: 100%;
   padding: 7px;
@@ -212,6 +213,40 @@ color: white;
   box-sizing: border-box;
   resize: vertical;
 	}
+
+.add-item-btn{
+    width: 10%;
+    float: left;
+    margin-left: 15%;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    background-color: #042baa;
+    color: white;
+    cursor: pointer;}
+
+
+.sell-btn{
+    width: 10%;
+    margin-left: 15%;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    background-color: #04AA6D;
+    color: white;
+    cursor: pointer;
+}
+
+.cancel-btn{
+    width: 10%;
+    float: left;
+    margin-left: 5px;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    background-color: #c91c33;
+    color: white;
+    cursor: pointer;
+    position: center;}
+
+
 
 .btn-save{
   background-color: #04AA6D;
@@ -230,8 +265,27 @@ color: white;
   display: flex;
   -ms-flex-wrap: wrap; /* IE10 */
   flex-wrap: wrap;
-  margin: 0 -16px;
+  margin: 2 -16px;
 }
+
+input{
+  width: 8%;
+  padding: 10px;
+  margin-right: 5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+
+}
+
+.center{text-align: center;}
+
+.left{
+    text-align: left;
+    margin-left: 60px;
+
+;}
 
 .col-25 {
   -ms-flex: 25%; /* IE10 */

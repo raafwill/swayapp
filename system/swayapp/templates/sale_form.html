@@ -10,48 +10,46 @@
 
 {# Adding select2 js #}
 {% block js %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
 <div class="row">
     <h1 class="Willianclass">Nova Venda</h1>
 </div>
-<div>
-    <div>
-        <form action="" method="POST">
-            {% csrf_token %}
-            <legend>Venda</legend>
-            <div>
-                <div>
-                    {{ forms }}
-                    {{ formset.management_form }}
-                </div>
-            </div>
-            <legend>Produtos</legend>
-            <div id="order">
+
+<body>
+<div class="row">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="bloco-form">
+            {{ forms }}
+            {{ formset.management_form }}
+        </div>
+        <div class="center">
+            <h1><legend class="left">Produtos</legend></h1>
+            <div id="order" class="bloco-form">
                 {% for item_order_form in formset %}
                 <div id="item{{ forloop.counter0 }}">
                     {{ item_order_form }}
                 </div>
                 {% endfor %}
-            </div>
-            <br>
-            <a id="add-item"><i></i>Add Item</a>
-
+            </div><br>
+            <a id="add-item" class="add-item-btn"><i></i>Add Item</a>
             <div>
-                <a href="{% url 'swayapp:sale_list' %}">
+                <a href="{% url 'swayapp:sale_list' %}" class="cancel-btn">
                     <i></i>
                     Cancelar
                 </a>
-                <button value="Save">
+                <button value="Save" class="sell-btn">
                     <i></i>
-                    Salvar
+                    Finalizar
                 </button>
             </div>
-          </form>
-      </div>
-  </div>
+        </div>
+    </form>
+</div>
+</div>
 
     <script>
       $(document).ready(function () {
@@ -60,7 +58,7 @@
 
         $('label[for="id_product-0-total"]').append('<span id="id_product-0-total-span" class="lead" style="padding-left: 10px;"></span>')
         $('label[for="id_product-0-total"]').append('<input id="id_product-0-inicial" class="form-control" type="hidden" />')
-        $('.clProduct').select2()})
+        $('select').select2()})
 
         $("#add-item").click(function (ev) {
           ev.preventDefault();
@@ -78,12 +76,13 @@
           }, 800);
           {# Initialize select2 on new select field #}
           $('#id_product-' + (count) + '-product').select2();
-          {# Initialize select2 on all select tags #}
+
           $('#id_product-' + (count) + '-product').addClass('clProduct');
           $('#id_product-' + (count) + '-quantity').addClass('clQuantity');
 
           $('label[for="id_product-' + (count) + '-total"]').append('<span id="id_product-' + (count) + '-total-span" class="lead" style="padding-left: 10px;"></span>')
           $('label[for="id_product-' + (count) + '-total"]').append('<input id="id_product-' + (count) + '-inicial" class="form-control" type="hidden" />')
+          {# Initialize select2 on all select tags #}
           $('.clProduct').select2();
       });
 
@@ -129,4 +128,6 @@
         {{ formset.empty_form }}
       </div>
     </script>
-{% endblock %}
+
+</body>
+{% endblock content %}

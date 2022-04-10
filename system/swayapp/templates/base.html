@@ -30,13 +30,14 @@
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> -->
-  <script src="{% static 'js/jquery.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/angular.js' %}"></script>
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-  <script src="/static/js/html5shiv.js"></script>
-  <script src="/static/js/respond.min.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/angular.js' %}"></script>
+    <script src="{% static 'js/select2.min.js' %}"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.js"></script>
+    <script src="/static/js/respond.min.js"></script>
     <![endif]-->
   {% block js %}{% endblock %}
 </head>
@@ -67,7 +68,7 @@
             </p>
 		</div>
 
-	<span style="font-size:30px;cursor:pointer;padding:1" onclick="openNav()">&#9776;</span>
+	<span class="free-span" style="font-size:30px;cursor:pointer;padding:1" onclick="openNav()">&#9776;</span>
 
     {% block content %}
 
