@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
   {% load static %}
@@ -13,7 +12,8 @@
     <title>Vendas</title>
   {% endblock title %}
 
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
   <style type="text/css">
     /* Move down content because we have a fixed navbar that is 50px tall */
@@ -38,10 +38,10 @@
     <!--[if lt IE 9]>
     <script src="/static/js/html5shiv.js"></script>
     <script src="/static/js/respond.min.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
     <![endif]-->
   {% block js %}{% endblock %}
 </head>
-
 
 <!-- <body ng-app="base"> -->
 <body>
@@ -51,27 +51,42 @@
     <li><a>Dashboard</a></li>
     <li><a>Persona</a></li>
     <li><a>Suporte</a></li>
-  </ul>
-
+</ul>
 
 <div id="main">
-		<div id="mySidenav" class="sidenav">
-
-			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a href="{% url 'swayapp:sale_list' %}" >Vendas</a>
-			<a href="{% url 'swayapp:product_list' %}">Produtos</a>
-			<a href="#">Clientes</a>
-			<a href="#">Sellers</a>
-			<a href="#">Staff</a>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a class="option" href="{% url 'swayapp:sale_list' %}" >
+            <i class='bx bxs-cart-add' style="color:white;"></i>
+            <span class="link_name"> Vendas</span>
+        </a>
+        <a href="{% url 'swayapp:product_list' %}">
+            <i class='bx bx-package' style="color:white;"></i>
+            <span class="link_name">Produtos</span>
+        </a>
+        <a href="#">
+            <i class='bx bxs-truck' style="color:white;"></i>
+            <span class="link_name">Sellers</span>
+        </a>
+        <a href="#">
+            <i class='bx bxs-hand' style="color:white;"></i>
+            <span class="link_name">Staff</span>
+        </a>
+        <a href="#">
+            <i class='bx bx-body' style="color:#04AA6D;"></i>
+            <span class="link_name">Clientes</span>
+        </a>
+        <div>
             <p id="id-times" class="intimes">
-                    Boa Noite!
+                Boa Noite!
             </p>
-		</div>
+        </div>
+    </div>
 
-	<span class="free-span" style="font-size:30px;cursor:pointer;padding:1" onclick="openNav()">&#9776;</span>
+
+    <span id="free_span" class="free-span" style="cursor:pointer;padding:1" onclick="openNav()">&#9776;</span>
 
     {% block content %}
-
     {% endblock content %}
 
     <footer>
@@ -92,7 +107,6 @@
     </footer>
 </div>
 
-
 <script>
   if (!window.Global) {
     window.Global = [];
@@ -101,22 +115,29 @@
     ]{% endblock angulardependencies %};
 
     function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
+ if (screen.width <=450){
+ document.getElementById("mySidenav").style.width = "60px";
+ document.getElementById("main").style.marginLeft = "60px";
+ document.getElementById("free_span").innerHTML = "";
+ }
+ else {
+ document.getElementById("mySidenav").style.width = "250px";
+ document.getElementById("main").style.marginLeft = "250px";
+ document.getElementById("free_span").innerHTML = "";}
 }
 
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginLeft= "0";
+  document.getElementById("main").style.marginLeft= "0"
+  document.getElementById("free_span").innerHTML = "&#9776;";
 }
 
 if (new Date().getHours() <= 12) {
   document.getElementById("id-times").innerHTML = "Bom Dia!";
 }
-else if (new Date().getHours() <= 17) {
+else if (new Date().getHours() <= 18) {
   document.getElementById("id-times").innerHTML = "Boa Tarde";
   }
-
 </script>
 
 </body>

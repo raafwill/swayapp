@@ -22,20 +22,32 @@
 <div class="row">
     <form action="" method="POST">
         {% csrf_token %}
-        <div class="bloco-form">
-            {{ forms }}
-            {{ formset.management_form }}
+        {{ formset.management_form }}
+
+        <div class="row">
+            <div class="bloco-form">
+                <label class="label-sale" for="{{ forms.customer.id_for_label }}">Cliente:</label>
+                {% csrf_token %}
+                {{ forms.customer }}
+            </div>
+            <div class="bloco-form">
+                <label class="label-sale" for="{{ forms.seller.id_for_label }}">Vendedor:</label>
+                {% csrf_token %}
+                {{ forms.seller }}
+            </div>
         </div>
+
         <div class="center">
             <h1><legend class="left">Produtos</legend></h1>
+
             <div id="order" class="bloco-form">
                 {% for item_order_form in formset %}
-                <div id="item{{ forloop.counter0 }}">
+                <div class="sale-form" id="item{{ forloop.counter0 }}">
                     {{ item_order_form }}
                 </div>
                 {% endfor %}
             </div><br>
-            <a id="add-item" class="add-item-btn"><i></i>Add Item</a>
+            <a id="add-item" class="add-item-btn"><i class='bx bxs-cart-add'></i></a>
             <div>
                 <a href="{% url 'swayapp:sale_list' %}" class="cancel-btn">
                     <i></i>

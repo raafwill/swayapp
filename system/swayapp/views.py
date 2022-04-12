@@ -223,7 +223,7 @@ def product_price(request):
 class SaleList(CounterMixin, ListView):
     template_name = 'sale_list.html'
     model = Sale
-    paginate_by = 20
+    paginate_by = 30
 
     def get_queryset(self):
 
