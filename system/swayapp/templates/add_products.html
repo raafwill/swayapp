@@ -8,34 +8,11 @@
 				<div class="row">
                     <div class="col-100">
                         <div class="bloco-form">
-							<label class="label-id" for="{{ receive_item_form.product.id_for_label }}">Produto:</label>
 							{% csrf_token %}
-							{{ receive_item_form.product |add_class:"input-custom" }}
-							{{ form.product |add_class:"input-custom" }}
+							{{ receive_item_form }}
+							{{ form }}
                         </div>
                     </div>
-					<div class="col-50">
-						<div class="bloco-form">
-							<label class="label-id" for="{{ receive_item_form.received.id_for_label }}">Qtd Recebida.:</label>
-								{% csrf_token %}
-								{{ receive_item_form.received |add_class:"input-custom"}}
-								{{ form.received |add_class:"input-custom"}}
-						</div>
-						<div class="bloco-form">
-							<label class="label-id" for="{{ receive_item_form.received_price.id_for_label }}">Preço Recebido:</label>
-							{% csrf_token %}
-							{{ receive_item_form.received_price |add_class:"input-custom"}}
-							{{ form.received_price |add_class:"input-custom"}}
-						</div>
-					</div>
-					<div class="col-50">
-						<div class="bloco-form">
-							<label class="label-id" for="{{ receive_item_form.received_by.id_for_label }}">Recebido Por:</label>
-							{% csrf_token %}
-							{{ receive_item_form.received_by |add_class:"input-custom"}}
-							{{ form.received_by |add_class:"input-custom"}}
-						</div>
-					</div>
 				</div>
 
 				<button class="btn-save" type="submit">Save changes</button>
@@ -45,5 +22,8 @@
     OLA MEU BROTHER
 </p>
 
+<script>
+	$(document).ready(function () {$('select').select2()});
+</script>
 
 {% endblock content %}

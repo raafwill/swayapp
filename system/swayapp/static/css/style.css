@@ -312,6 +312,12 @@ input{
 
 @media screen and (max-width: 450px) {
 
+body{font-size: 14px;}
+
+#main {
+    transition: margin-left .5s;
+    padding: 8px;
+}
 
   .sidenav .link_name {
     padding: 8px 8px 8px 32px;
@@ -356,10 +362,10 @@ padding: 5px 5px 5px 16px;
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  left: 0;
+  left: 2;
   top: 0;
   width: 100%; /* Full width */
-  height: 50%; /* Full height */
+  height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
@@ -368,17 +374,19 @@ padding: 5px 5px 5px 16px;
 .modal-content {
   background-color: #082a331f;
   margin: 1% auto; /* 1% from the top and centered */
-  padding: 20px;
-  width: 30%; /* Could be more or less, depending on screen size */
+  padding: 20px 5px 20px 20px;
+  width: 60%; /* Could be more or less, depending on screen size */
 }
 
 .modal-header{
     padding: 15px 16px;
     background-color: #04AA6D;
     color: white;
+    font-size: 14px;
 }
 
 .modal-body{
+    font-size: 12px;
     padding: 40;
   	border-radius: 5px;
   	background-color: #f2f2f2;
@@ -391,12 +399,48 @@ padding: 5px 5px 5px 16px;
   font-weight: bold;
 }
 
+    table{
+      width: 95%;
+      border-color: green;
+      border-spacing: 0;
+      border-collapse: collapse;
+      margin-top: 2px;
+      margin-left: 1px;
+      margin-right: 5px;
+      font-size: 10px;
+  }
+
+  th{
+      height: 25px;
+      color: white;
+      text-align: left;
+      vertical-align: middle;
+      background-color: #04AA6D;
+      padding: 5px;
+      position: -webkit-sticky;
+      top: 0;
+  }
+
+
+  td{
+      height: 5px;
+      padding: 5px;
+  }
+
+  tr:hover {
+  background-color: a7cdec;
+  color: black;
+  }
+
+  tr:nth-child(even) {background-color: #f2f2f2;}
+
 .left{
     text-align: left;
-    margin-left: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
     font-size: 16px;
     background-color: gray;
-    width: 100%;
+    width: 95%;
     color: white;
 
 ;}
@@ -419,5 +463,39 @@ padding: 0px 10px 0px 20px;
 width: 100px;
 }
 
-.sale-form {}
+.sale-form {font-size: 12px;}
+
+.sell-btn{
+    width: 40%;
+    margin-left: 15%;
+    padding: 5px 5px 5px 15px;
+    border-radius: 5px;
+    background-color: #04AA6D;
+    color: white;
+    cursor: pointer;
+}
+
+.add-item-btn{
+    width: 10%;
+    float: left;
+    font-size: 100%;
+    margin-left: 5%;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    background-color: #04AA6D;
+    color: white;
+    cursor: pointer;}
+
+
+.cancel-btn{
+    width: 10%;
+    float: left;
+    margin-left: 5px;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    background-color: #c91c33;
+    color: white;
+    cursor: pointer;
+    position: center;}
+
 }

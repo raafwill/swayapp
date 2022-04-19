@@ -1,5 +1,28 @@
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+{% extends 'base.html' %}
+{% block content %}
+{% load widget_tweaks %}
+
+
+<h1 class="willianclass">Novo Cliente</h1>
+<form action="." method="POST">
+				<div class="row">
+					<div class="col-100">
+						<div class="bloco-form">
+							{% csrf_token %}
+							{{ form }}
+						</div>
+					</div>
+				</div>
+
+				<button class="btn-save" type="submit">Salvar</button>
+			</form>
+
+<p id="ptest">
+    OLA MEU BROTHER
+</p>
+
+<script>
+	$(document).ready(function () {$('select').select2()});
+</script>
+
+{% endblock content %}

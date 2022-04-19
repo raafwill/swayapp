@@ -184,6 +184,7 @@ class Sale(TimeStampedModel):
 
 
 class SaleDetail(models.Model):
+
     sale = models.ForeignKey(
         Sale,
         related_name="sales_det",

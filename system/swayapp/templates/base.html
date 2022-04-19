@@ -13,7 +13,9 @@
   {% endblock title %}
 
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
 
   <style type="text/css">
     /* Move down content because we have a fixed navbar that is 50px tall */
@@ -39,6 +41,7 @@
     <script src="/static/js/html5shiv.js"></script>
     <script src="/static/js/respond.min.js"></script>
     <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+
     <![endif]-->
   {% block js %}{% endblock %}
 </head>
@@ -68,7 +71,7 @@
             <i class='bx bxs-truck' style="color:white;"></i>
             <span class="link_name">Sellers</span>
         </a>
-        <a href="#">
+        <a href="{% url 'swayapp:add_brand' %}">
             <i class='bx bxs-hand' style="color:white;"></i>
             <span class="link_name">Staff</span>
         </a>

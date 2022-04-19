@@ -10,7 +10,6 @@
 
 {# Adding select2 js #}
 {% block js %}
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -43,15 +42,20 @@
             <div id="order" class="bloco-form">
                 {% for item_order_form in formset %}
                 <div class="sale-form" id="item{{ forloop.counter0 }}">
-                    {{ item_order_form }}
+                    <div class="col-50">
+                        {{ item_order_form }}
+                        <br>
+                    </div>
                 </div>
+                <p>Novo Item</p>
+
                 {% endfor %}
             </div><br>
             <a id="add-item" class="add-item-btn"><i class='bx bxs-cart-add'></i></a>
             <div>
                 <a href="{% url 'swayapp:sale_list' %}" class="cancel-btn">
-                    <i></i>
-                    Cancelar
+                    <i class="bi bi-trash"></i>
+                    X
                 </a>
                 <button value="Save" class="sell-btn">
                     <i></i>
@@ -92,8 +96,8 @@
           $('#id_product-' + (count) + '-product').addClass('clProduct');
           $('#id_product-' + (count) + '-quantity').addClass('clQuantity');
 
-          $('label[for="id_product-' + (count) + '-total"]').append('<span id="id_product-' + (count) + '-total-span" class="lead" style="padding-left: 10px;"></span>')
-          $('label[for="id_product-' + (count) + '-total"]').append('<input id="id_product-' + (count) + '-inicial" class="form-control" type="hidden" />')
+          $('label[for="id_product-' + (count) + '-total"]').append('<span id="id_product-' + (count) + '-total-span" class="lead" style="padding-left: 10px;"></span><br>')
+          $('label[for="id_product-' + (count) + '-total"]').append('<input id="id_product-' + (count) + '-inicial" class="form-control" type="hidden" /><br>')
           {# Initialize select2 on all select tags #}
           $('.clProduct').select2();
       });

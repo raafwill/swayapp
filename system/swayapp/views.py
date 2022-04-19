@@ -179,8 +179,18 @@ def sale_create(request):
             request.POST, request.FILES, instance=order_forms, prefix='product')
 
         if forms.is_valid() and formset.is_valid():
+            for form in formset:
+                item = form.cleaned_data.get('product')
+                qitem = form.cleaned_data.get('quantity')
+                Product.objects.filter(product=item).update(received_price=(F('received_price') - (F('received_price')/F('stock')) * qitem))
+                Product.objects.filter(product=item).update(stock=F('stock') - qitem)
+
+
             forms = forms.save()
             formset.save()
+
+
+
             return HttpResponseRedirect(resolve_url('swayapp:sale_detail', forms.pk))
 
     else:
@@ -223,7 +233,7 @@ def product_price(request):
 class SaleList(CounterMixin, ListView):
     template_name = 'sale_list.html'
     model = Sale
-    paginate_by = 30
+    paginate_by = 60
 
     def get_queryset(self):
 
