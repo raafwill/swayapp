@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.formats import number_format
 from django.urls import reverse_lazy
 
@@ -117,7 +118,7 @@ class Product(models.Model):
     )
     product = models.CharField('Produto', max_length=100, unique=True)
     sell_price = models.DecimalField('Preço venda', max_digits=7, decimal_places=2, default=0)
-    received_by = models.CharField(max_length=50, blank=True, null=True)
+    received_by = models.ForeignKey(User, max_length=50, blank=True, null=True, on_delete=models.CASCADE)
     received = models.IntegerField(default='0', blank=False, null=True)
     received_price = models.DecimalField('Preço Recebimento', max_digits=20, decimal_places=2, null=True)
     ipi = models.DecimalField('IPI', max_digits=3, decimal_places=2, blank=True, default=0)
@@ -145,6 +146,13 @@ class Product(models.Model):
         else:
             return "R$ %s" % number_format(0, 2)
 
+    def get_lucro(self):
+        if self.stock != 0 and self.received_price != 0:
+            return "R$ %s" % number_format((self.stock * self.sell_price) - self.received_price, 2)
+        else:
+            return "R$ %s" % number_format(0, 2)
+
+
     def to_dict_json(self):
         return {
             'pk': self.pk,
@@ -157,7 +165,7 @@ class Product(models.Model):
 class Sale(TimeStampedModel):
     customer = models.ForeignKey('Customer', related_name='customer_sale', verbose_name='cliente',
                                  on_delete=models.CASCADE)
-    seller = models.ForeignKey('Seller', related_name='seller_sale', verbose_name='vendedor', on_delete=models.CASCADE)
+    seller = models.ForeignKey(User, related_name='seller_sale', verbose_name='vendedor', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = 'venda'
@@ -230,11 +238,11 @@ class SaleDetail(models.Model):
         return "R$ %s" % number_format(self.subtotal, 2)
 
 
-class ReceivedItems(models.Model):
+class ReceivedItems(TimeStampedModel):
     product = models.CharField(max_length=50, blank=True, null=True)
     unit_price_payd = models.DecimalField('Custo', max_digits=20, decimal_places=2, default=0)
     quantity_received = models.IntegerField('Quantidade', default='0', blank=False, null=True)
-    received_by = models.CharField(max_length=50, blank=True, null=True)
+    received_by = models.ForeignKey(User, max_length=50, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         ordering = ['product']
@@ -242,7 +250,8 @@ class ReceivedItems(models.Model):
         verbose_name_plural = 'Receiveds'
 
     def __str__(self):
-        return self.product
+
+        return "%03d" % self.id + "/%s" % self.created.strftime('%d/%m/%y') + " - %s " % self.product + "Recebido por: %s " % self.received_by
 
     def get_total_payd(self):
         return self.unit_price_payd * (self.quantity_received or 0)

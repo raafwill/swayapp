@@ -41,7 +41,7 @@ class CategoryForm(forms.ModelForm):
 class ReceivedProduct(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['product', 'received_by', 'received', 'received_price']
+        fields = ['product', 'received', 'received_price']
 
 
 class ReceivedItems(forms.ModelForm):
@@ -53,7 +53,7 @@ class ReceivedItems(forms.ModelForm):
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        fields = '__all__'
+        fields = ['customer']
 
 class SaleDetailForm(forms.ModelForm):
     class Meta:

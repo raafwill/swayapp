@@ -72,12 +72,12 @@
 		<tr>
 			<th>NCM</th>
 			<th>Produto</th>
-			<th>Marca</th>
 			<th class="text-center">Estoque</th>
 			<th class="text-center">Estoque Min.</th>
 			<th class="text-right">Preço</th>
 			<th class="text-center">Custo Médio</th>
 			<th class="text-center">Preço Recebido</th>
+			<th class="text-center">Lucro</th>
 			<th class="text-center">ID</th>
 		</tr>
 		</thead>
@@ -90,12 +90,12 @@
 			{% endif %}
 			<td>{{ product.ncm }}</td>
 			<td><b>{{ product.product }}</b></td>
-			<td>{{ product.brand.brand }}</td>
 			<td class="text-center">{{ product.stock }}</td>
 			<td class="text-center">{{ product.stock_min }}</td>
 			<td class="text-right">{{ product.get_price }}</td>
 			<td class="text-right">{{ product.get_custo_medio }}</td>
 			<td class="text-right">{{ product.received_price }}</td>
+			<td class="text-right">{{ product.get_lucro }}</td>
 			<!--{% if product.get_ipi == "0" %}-->
 			<!--<td class="text-right">-&#45;&#45;</td>-->
 			<!--{% else %}-->

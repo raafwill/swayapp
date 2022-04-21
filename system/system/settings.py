@@ -40,11 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #LocalApps
     'swayapp',
-    'users.apps.UsersConfig',
+    #Apps de terceiros
     'bootstrap4',
     'bootstrapform',
     'crispy_forms',
-    'widget_tweaks'
+    'widget_tweaks',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -132,11 +133,10 @@ STATICFILES_DIRS = (
    os.path.join(BASE_DIR, 'staticfiles'),
 )
 
+LOGIN_URL = '/admin/login/'
+LOGOUT_REDIRECT_URL = '/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# User model
-
-AUTH_USER_MODEL = "users.User"

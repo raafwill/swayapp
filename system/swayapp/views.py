@@ -1,8 +1,19 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, resolve_url
 from .models import Customer, Seller, Product, Sale, SaleDetail
-from .forms import SellerForm, CustomerForm, ReceivedItems, ProductForm, BrandForm, CategoryForm, ReceivedProduct, \
-    SaleForm, SaleDetailForm
+from .forms import\
+    SellerForm, \
+    CustomerForm,\
+    ReceivedItems,\
+    ProductForm,\
+    BrandForm,\
+    CategoryForm,\
+    ReceivedProduct,\
+    SaleForm,\
+    SaleDetailForm
+
 from .mixins import CounterMixin
 from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib import messages
@@ -15,6 +26,7 @@ def index(request, Seller):
 
 
 # SEÇÃO VIEWS PARA FORMS DE CADASTROS DE CLIENTES E PRODUTOS
+@login_required
 def add_seller(request):
     if request.method == 'POST':
         form = SellerForm(request.POST)
@@ -27,7 +39,7 @@ def add_seller(request):
 
     return render(request, "sellers.html", {"form": form})
 
-
+@login_required
 def add_customer(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)
@@ -40,7 +52,7 @@ def add_customer(request):
 
     return render(request, "customers.html", {"form": form})
 
-
+@login_required
 def add_products(request):
     form = ProductForm(request.POST or None)
     if form.is_valid():
@@ -51,7 +63,7 @@ def add_products(request):
                }
     return render(request, "add_products.html", context)
 
-
+@login_required
 def add_brand(request):
     form = BrandForm(request.POST or None)
     if form.is_valid():
@@ -62,7 +74,7 @@ def add_brand(request):
                }
     return render(request, "add_brand.html", context)
 
-
+@login_required
 def add_category(request):
     form = CategoryForm(request.POST or None)
     if form.is_valid():
@@ -92,7 +104,7 @@ def add_category(request):
 #         "username": 'Recebido por'}
 #     return render(request, "add_products.html", context)
 
-
+@login_required
 def receive_product(request, pk):
     queryset = Product.objects.get(id=pk)
     static_price_received = queryset.received_price
@@ -102,10 +114,12 @@ def receive_product(request, pk):
     if form.is_valid() and receive_item_form.is_valid():
         instance = form.save(commit=False)
         receiving = receive_item_form.save(commit=False)
+        instance.received_by = request.user
         instance.stock += instance.received
+        receiving.unit_price_payd = instance.received_price
         instance.received_price = instance.received_price + (static_price_received or 0)
         receiving.product = instance.product
-        receiving.unit_price_payd = instance.received_price
+
         receiving.received_by = instance.received_by
         receiving.quantity_received = instance.received
 
@@ -123,7 +137,7 @@ def receive_product(request, pk):
 
     return render(request, "add_products.html", context)
 
-
+@method_decorator(login_required, name='dispatch')
 class ProductList(CounterMixin, ListView):
     template_name = 'product_list.html'
     model = Product
@@ -159,7 +173,7 @@ class ProductList(CounterMixin, ListView):
             p = p.filter(outofline=1)
         return p
 
-
+@login_required
 def sale_create(request):
     order_forms = Sale()
     item_order_formset = inlineformset_factory(
@@ -186,7 +200,9 @@ def sale_create(request):
                 Product.objects.filter(product=item).update(stock=F('stock') - qitem)
 
 
-            forms = forms.save()
+            forms = forms.save(commit=False)
+            forms.seller = request.user
+            forms.save()
             formset.save()
 
 
@@ -208,7 +224,7 @@ def sale_create(request):
 
     return render(request, 'sale_form.html', context)
 
-
+@login_required
 def autofill(request):
     if 'term' in request.GET:
         qs = Product.objects.filter(Product__icontains=request.GET.get('term'))
@@ -219,7 +235,7 @@ def autofill(request):
 
     return render(request, 'teste.html')
 
-
+@login_required
 def product_price(request):
     products = Product.objects.values('product', 'sell_price')
 
@@ -229,7 +245,7 @@ def product_price(request):
 
     return JsonResponse(data_dict)
 
-
+@method_decorator(login_required, name='dispatch')
 class SaleList(CounterMixin, ListView):
     template_name = 'sale_list.html'
     model = Sale
@@ -255,6 +271,7 @@ class SaleList(CounterMixin, ListView):
         return qs
 
 
+@method_decorator(login_required, name='dispatch')
 class SaleDetailView(DetailView):
     template_name = 'sale_detail.html'
     model = Sale

@@ -58,7 +58,7 @@
 							<td class="text-center">{{ sale.created|date:"d/m/Y" }}</td>
 							<td class="text-center">{{ sale.get_items }}</td>
 							<td class="text-right">{{ sale.get_total }}</td>
-							<td>{{ sale.seller.full_name }}</td>
+							<td>{{ sale.seller }}</td>
 
 						</tr>
 				{% endfor %}
