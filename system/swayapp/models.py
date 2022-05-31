@@ -251,9 +251,32 @@ class ReceivedItems(TimeStampedModel):
 
     def __str__(self):
 
-        return "%03d" % self.id + "/%s" % self.created.strftime('%d/%m/%y') + " - %s " % self.product + "Recebido por: %s " % self.received_by
+        # concatenate the id with created-date and user
+        return "%03d" % self.id + "/%s" % \
+               self.created.strftime("%Y-%m-%d %H:%M:%S") + " - %s " %\
+               self.product + "Recebido por: %s " % self.received_by
 
     def get_total_payd(self):
         return self.unit_price_payd * (self.quantity_received or 0)
 
     total = property(get_total_payd)
+
+
+
+class ReportedItems(TimeStampedModel):
+    product = product = models.CharField(max_length=50, blank=True, null=True)
+    damage_value = models.DecimalField('Custo', max_digits=20, decimal_places=2, default=0)
+    quantity_lost = models.IntegerField('Quantidade', default='0', blank=False, null=True)
+    reported_by = models.ForeignKey(User, max_length=50, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        ordering = ['product']
+        verbose_name = 'Reported'
+        verbose_name_plural = 'Reports'
+
+    def __str__(self):
+
+        # concatenate the id with created-date and user
+        return "%03d" % self.id + "/%s" % \
+               self.created.strftime("%Y-%m-%d %H:%M:%S") + " - %s " %\
+               self.product + "Recebido por: %s " % self.reported_by

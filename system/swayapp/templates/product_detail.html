@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<main role="main" class="container">
+
+  <div class="jumbotron">
+        <br>
+      <a href="{% url 'swayapp:report' queryset.id %}"><div class="avaria-button" class="Willianclass">Avaria</div></a>
+      <a href="{% url 'swayapp:receive' queryset.id %}"><div class="addbutton" class="Willianclass">Entrada</div></a>
+      <br><br>
+      <div class="display_table">
+         <table class='table'>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>DATA RECEBIMENTO</th>
+              </tr>
+              <tr>
+                <td>{{queryset.product}}</td>
+                <td>{{queryset.stock}}</td>
+                <td>{{queryset.sell_price}}</td>
+                <td>{{queryset.data_recebimento}}</td>
+              </tr>
+         </table>
+      </div>
+  </div>
+</main>
+
+{% endblock content %}

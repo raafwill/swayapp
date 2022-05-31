@@ -101,7 +101,7 @@
 			<!--{% else %}-->
 			<!--<td class="text-right">{{ product.get_ipi }}%</td>-->
 			<!--{% endif %}-->
-			<td class="text-center"><a href="{% url 'swayapp:receive' product.id %}">{{product.id}}</a></td>
+			<td class="text-center"><a href="{% url 'swayapp:product_detail' product.id %}">{{product.id}}</a></td>
 		</tr>
 		{% endfor %}
 		</tbody>

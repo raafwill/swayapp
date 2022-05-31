@@ -1,5 +1,5 @@
 from django import forms
-from .models import Customer, Seller, Product, Brand, Category, ReceivedItems, Sale, SaleDetail
+from .models import Customer, Seller, Product, Brand, Category, ReceivedItems, Sale, SaleDetail, ReportedItems
 from django.forms import inlineformset_factory
 
 
@@ -49,6 +49,11 @@ class ReceivedItems(forms.ModelForm):
         model = ReceivedItems
         exclude = ['product', 'unit_price_payd', 'quantity_received', 'received_by']
 
+class ReportedItems(forms.ModelForm):
+    class Meta:
+        model = ReportedItems
+        exclude = ['product', 'damage_value', 'quantity_lost', 'reported_by', 'received_price']
+
 
 class SaleForm(forms.ModelForm):
     class Meta:
@@ -58,4 +63,4 @@ class SaleForm(forms.ModelForm):
 class SaleDetailForm(forms.ModelForm):
     class Meta:
         model = SaleDetail
-        fields = ['sale', 'product', 'price_sale', 'quantity', 'ipi_sale']
+        fields = ['sale', 'product',  'quantity', 'price_sale']

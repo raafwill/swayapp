@@ -19,56 +19,44 @@
 
 <body>
 <div class="row">
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ formset.management_form }}
+    <form class="form-group" action="" method="POST">
+              {% csrf_token %}
 
-        <div class="row">
-            <div class="bloco-form">
-                <label class="label-sale" for="{{ forms.customer.id_for_label }}">Cliente:</label>
-                {% csrf_token %}
-                {{ forms.customer }}
-            </div>
-        </div>
+              <legend>Venda</legend>
+              <div class="row">
+                  <div class="col-xs-8 col-md-5">
+                      {{ forms|bootstrap }}
+                      {{ formset.management_form|bootstrap }}
+                  </div>
+              </div>
 
-        <div class="center">
-            <h1><legend class="left">Produtos</legend></h1>
+              <div id="order" class="form-inline">
+                  {% for item_order_form in formset %}
+                  <div id="item-{{ forloop.counter0 }}" class="form-group">
+                      {{ item_order_form|bootstrap }}
+                  </div>
+                  {% endfor %}
+              </div>
+              <br>
+              <a class="add-item-btn" id="add-item"><i class="fa fa-plus"></i> + </a>
 
-            <div id="order" class="bloco-form">
-                {% for item_order_form in formset %}
-                <div class="sale-form" id="item{{ forloop.counter0 }}">
-                    <div class="col-50">
-                        {{ item_order_form }}
-                        <br>
-                    </div>
-                </div>
-                <p>Novo Item</p>
-
-                {% endfor %}
-            </div><br>
-            <a id="add-item" class="add-item-btn"><i class='bx bxs-cart-add'></i></a>
-            <div>
-                <a href="{% url 'swayapp:sale_list' %}" class="cancel-btn">
-                    <i class="bi bi-trash"></i>
-                    X
-                </a>
-                <button value="Save" class="sell-btn">
-                    <i></i>
-                    Finalizar
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
+              <div class="form-inline buttons">
+                  <a href="{% url 'swayapp:sale_list' %}" class="btn btn-danger pull-right">
+                      <i class="fa fa-times"></i>
+                      Cancelar
+                  </a>
+                  <button class="addbutton" value="Save">
+                      <i class="fa fa-floppy-o"></i>
+                      Salvar
+                  </button>
+              </div>
+          </form>
 </div>
 
     <script>
       $(document).ready(function () {
         $('#id_product-0-product').addClass('clProduct');
         $('#id_product-0-quantity').addClass('clQuantity');
-
-        $('label[for="id_product-0-total"]').append('<span id="id_product-0-total-span" class="lead" style="padding-left: 10px;"></span>')
-        $('label[for="id_product-0-total"]').append('<input id="id_product-0-inicial" class="form-control" type="hidden" />')
         $('select').select2()})
 
         $("#add-item").click(function (ev) {
@@ -90,9 +78,6 @@
 
           $('#id_product-' + (count) + '-product').addClass('clProduct');
           $('#id_product-' + (count) + '-quantity').addClass('clQuantity');
-
-          $('label[for="id_product-' + (count) + '-total"]').append('<span id="id_product-' + (count) + '-total-span" class="lead" style="padding-left: 10px;"></span><br>')
-          $('label[for="id_product-' + (count) + '-total"]').append('<input id="id_product-' + (count) + '-inicial" class="form-control" type="hidden" /><br>')
           {# Initialize select2 on all select tags #}
           $('.clProduct').select2();
       });
@@ -135,7 +120,7 @@
     </script>
 
     <script type="text/html" id="item-order">
-      <div id="item-__prefix__" class="form-group" style="margin-top: 10px">
+      <div id="item-__prefix__" class="form-group">
         {{ formset.empty_form }}
       </div>
     </script>

@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, resolve_url
-from .models import Customer, Seller, Product, Sale, SaleDetail
+from .models import Customer, Seller, Product, Sale, SaleDetail, ReceivedItems as RC_ITEM, ReportedItems
 from .forms import\
     SellerForm, \
     CustomerForm,\
@@ -12,7 +13,8 @@ from .forms import\
     CategoryForm,\
     ReceivedProduct,\
     SaleForm,\
-    SaleDetailForm
+    SaleDetailForm, \
+    ReportedItems
 
 from .mixins import CounterMixin
 from django.views.generic import TemplateView, ListView, DetailView
@@ -129,13 +131,50 @@ def receive_product(request, pk):
         return redirect('/swayapp/product_list/')
 
     context = {
-        "title": 'Recebido ' + str(queryset.product),
+        "title": 'Receber ' + str(queryset.product),
         "instance": queryset,
         "receive_item_form": receive_item_form,
         "form": form,
         "username": 'Recebido por'}
 
     return render(request, "add_products.html", context)
+
+
+def report_item(request, pk):
+    queryset = Product.objects.get(id=pk)
+    static_price_received = queryset.received_price
+    stock_static = queryset.stock
+    custo_medio = static_price_received / stock_static
+    reported_item_form = ReportedItems(request.POST)
+    form = ReceivedProduct(request.POST or None, instance=queryset)
+
+    if form.is_valid() and reported_item_form.is_valid():
+        instance = form.save(commit=False)
+        reporting = reported_item_form.save(commit=False)
+        instance.stock -= instance.received
+        reporting.damage_value = (instance.received * custo_medio)
+        instance.received_price = (static_price_received or 0) - (instance.received * custo_medio)
+        reporting.product = instance.product
+
+        reporting.reported_by = instance.received_by
+        reporting.quantity_lost = instance.received
+
+        instance.save()
+        reporting.save()
+
+        return redirect('/swayapp/product_list/')
+
+    context = {
+        "title": 'Reportar ' + str(queryset.product),
+        "instance": queryset,
+        "reported_item_form": reported_item_form,
+        "form": form,
+        "username": 'recebido por'
+    }
+
+    return render(request, "add_products.html", context)
+
+
 
 @method_decorator(login_required, name='dispatch')
 class ProductList(CounterMixin, ListView):
@@ -289,3 +328,28 @@ def product_json(request, pk):
     product = Product.objects.filter(pk=pk)
     data = [item.to_dict_json() for item in product]
     return JsonResponse({'data': data})
+
+
+def product_detail(request, pk):
+    queryset = Product.objects.get(id=pk)
+    context = {"title": queryset.product,
+               "queryset": queryset,}
+
+    return render(request, "product_detail.html", context)
+
+
+def received_detail(request, pk):
+    queryset = RC_ITEM.objects.get(id=pk)
+    context = {"title:": "receber " + str(queryset.product),
+               "queryset": queryset}
+
+    return render(request, "received_detail.html", context)
+
+
+def dashboard_with_pivot(request):
+    return render(request, 'dashboard_with_pivot.html', {})
+
+def pivot_data(request):
+    dataset = SaleDetail.objects.all()
+    data = serializers.serialize('json', dataset)
+    return JsonResponse(data, safe=False)
