@@ -130,7 +130,7 @@ USE_THOUSAND_SEPARATOR = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-   os.path.join(BASE_DIR, 'swayapp/static'),
+   os.path.join(BASE_DIR, 'staticfiles'),
 )
 
 LOGIN_URL = '/admin/login/'
