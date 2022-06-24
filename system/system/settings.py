@@ -132,7 +132,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
    os.path.join(BASE_DIR, 'static'),
 )
-
+#teste
 LOGIN_URL = '/admin/login/'
 LOGOUT_REDIRECT_URL = '/'
 
