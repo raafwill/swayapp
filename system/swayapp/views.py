@@ -59,11 +59,11 @@ def add_products(request):
     form = ProductForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/swayapp/add_products/')
+        return redirect('/swayapp/product_list/')
     context = {"form": form,
                "title": "Adicionar Items",
                }
-    return render(request, "add_products.html", context)
+    return render(request, "product_list.html", context)
 
 @login_required
 def add_brand(request):

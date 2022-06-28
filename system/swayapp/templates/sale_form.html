@@ -20,37 +20,40 @@
 <body>
 <div class="row">
     <form class="form-group" action="" method="POST">
-              {% csrf_token %}
+        {% csrf_token %}
 
-              <legend>Venda</legend>
-              <div class="row">
-                  <div class="col-xs-8 col-md-5">
-                      {{ forms|bootstrap }}
-                      {{ formset.management_form|bootstrap }}
-                  </div>
-              </div>
+        <legend>Venda</legend>
+        <div class="row">
+            <div class="col-xs-8 col-md-5">
+                {{ forms|bootstrap }}
+                {{ formset.management_form|bootstrap }}
+            </div>
+        </div>
 
-              <div id="order" class="form-inline">
-                  {% for item_order_form in formset %}
-                  <div id="item-{{ forloop.counter0 }}" class="form-group">
-                      {{ item_order_form|bootstrap }}
-                  </div>
-                  {% endfor %}
-              </div>
-              <br>
-              <a class="add-item-btn" id="add-item"><i class="fa fa-plus"></i> + </a>
+        <div id="order" class="form-inline">
+            {% for item_order_form in formset %}
+            <div id="item-{{ forloop.counter0 }}" class="form-group">
+                {{ item_order_form|bootstrap }}
+            </div>
+            {% endfor %}
+        </div>
+        <br>
+        <a class="add-item-btn" id="add-item">
+            <i class="fa fa-plus"></i>
+            Novo Item
+        </a>
 
-              <div class="form-inline buttons">
-                  <a href="{% url 'swayapp:sale_list' %}" class="btn btn-danger pull-right">
-                      <i class="fa fa-times"></i>
-                      Cancelar
-                  </a>
-                  <button class="addbutton" value="Save">
-                      <i class="fa fa-floppy-o"></i>
-                      Salvar
-                  </button>
-              </div>
-          </form>
+        <div class="form-inline buttons">
+            <a href="{% url 'swayapp:sale_list' %}" class="btn btn-danger pull-right">
+                <i class="fa fa-times"></i>
+                Cancelar
+            </a>
+            <button class="addbutton" value="Save">
+                <i class="fa fa-floppy-o"></i>
+                Salvar
+            </button>
+        </div>
+    </form>
 </div>
 
     <script>

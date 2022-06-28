@@ -54,6 +54,14 @@
     <li><a>Dashboard</a></li>
     <li><a>Persona</a></li>
     <li><a>Suporte</a></li>
+    <a class="option" href="{% url 'swayapp:sale_add' %}"><i class='bx bxs-cart-add'
+          style="
+          color:red;
+          font-size:50px;
+          float:right;
+          padding:10px 30px 10px 10px;">
+    </i>
+    </a>
 </ul>
 
 <div id="main">
@@ -68,12 +76,12 @@
             <span class="link_name">Produtos</span>
         </a>
         <a href="#">
-            <i class='bx bxs-truck' style="color:white;"></i>
-            <span class="link_name">Sellers</span>
+            <i class='bx bxs-hand'  style="color:white;"></i>
+            <span class="link_name">Vendedores</span>
         </a>
         <a href="{% url 'swayapp:add_brand' %}">
-            <i class='bx bxs-hand' style="color:white;"></i>
-            <span class="link_name">Staff</span>
+            <i class='bx bxs-truck' style="color:white;"></i>
+            <span class="link_name">Fornecedores</span>
         </a>
         <a href="#">
             <i class='bx bx-body' style="color:#04AA6D;"></i>

@@ -4,23 +4,20 @@
 
 
 <h1 class="willianclass">Novo Fornecedor/Marca</h1>
+
 <form action="." method="POST">
-				<div class="row">
-					<div class="col-100">
-						<div class="bloco-form">
-							<label class="label-id" for="{{ form.brand.id_for_label }}">Marca/Fornecedor:</label>
-							{% csrf_token %}
-							{{ form.brand |add_class:"input-custom" }}
-						</div>
-					</div>
-				</div>
+	<div class="row">
+		<div class="col-100">
+			<div class="bloco-form">
+				<label class="label-id" for="{{ form.brand.id_for_label }}">Marca/Fornecedor:</label>
+				{% csrf_token %}
+				{{ form.brand |add_class:"input-custom" }}
+			</div>
+		</div>
+	</div>
+	<button class="btn-save" type="submit">Salvar</button>
+</form>
 
-				<button class="btn-save" type="submit">Salvar</button>
-			</form>
-
-<p id="ptest">
-    OLA MEU BROTHER
-</p>
 
 <script>
 	$(document).ready(function () {$('select').select2()});
