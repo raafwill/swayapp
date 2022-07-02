@@ -51,6 +51,11 @@
 								{{ form.stock_min |add_class:"input-custom"}}
 						</div>
 						<div class="bloco-form">
+							<label class="label-id" for="{{ form.multiplo.id_for_label }}">Multiplo:</label>
+								{% csrf_token %}
+								{{ form.multiplo |add_class:"input-custom"}}
+						</div>
+						<div class="bloco-form">
 							<label class="label-id" for="{{ form.sell_price.id_for_label }}">Preço venda:</label>
 							{% csrf_token %}
 							{{ form.sell_price |add_class:"input-custom"}}

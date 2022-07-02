@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core import serializers
+from django.db.models import ExpressionWrapper, FloatField
+from django.db.models.functions import Cast
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, resolve_url
 from .models import Customer, Seller, Product, Sale, SaleDetail, ReceivedItems as RC_ITEM, ReportedItems
@@ -87,25 +89,6 @@ def add_category(request):
                }
     return render(request, "add_category.html", context)
 
-
-#
-# def receive_product(request, pk):
-#     queryset = Product.objects.get(id=pk)
-#     form = ReceiveProduct(request.POST or None, instance=queryset)
-#     if form.is_valid():
-#         instance = form.save(commit=False)
-#         instance.stock += instance.received
-#         instance.save()
-#
-#         return redirect('/swayapp/product_list/')
-#
-#     context = {
-#         "title": 'Recebido ' + str(queryset.product),
-#         "instance": queryset,
-#         "form": form,
-#         "username": 'Recebido por'}
-#     return render(request, "add_products.html", context)
-
 @login_required
 def receive_product(request, pk):
     queryset = Product.objects.get(id=pk)
@@ -116,11 +99,18 @@ def receive_product(request, pk):
     if form.is_valid() and receive_item_form.is_valid():
         instance = form.save(commit=False)
         receiving = receive_item_form.save(commit=False)
-        instance.received_by = request.user
-        instance.stock += instance.received
+        instance.received_by = request.user #//mudando o model produto received_by para o user que recebeu por ultimo - o que não faz sentido algum
+        if receiving.multiplo_check == True:
+            instance.stock += instance.received * instance.multiplo
+        else:
+            instance.stock += instance.received
         receiving.unit_price_payd = instance.received_price
         instance.received_price = instance.received_price + (static_price_received or 0)
         receiving.product = instance.product
+        receiving.multiplo = instance.multiplo
+
+
+
 
         receiving.received_by = instance.received_by
         receiving.quantity_received = instance.received
@@ -235,9 +225,8 @@ def sale_create(request):
             for form in formset:
                 item = form.cleaned_data.get('product')
                 qitem = form.cleaned_data.get('quantity')
-                Product.objects.filter(product=item).update(received_price=(F('received_price') - (F('received_price')/F('stock')) * qitem))
+                Product.objects.filter(product=item).update(received_price=(F('received_price') - (Cast(F('received_price'), output_field=FloatField())/Cast(F('stock'), output_field=FloatField())) * qitem))
                 Product.objects.filter(product=item).update(stock=F('stock') - qitem)
-
 
             forms = forms.save(commit=False)
             forms.seller = request.user

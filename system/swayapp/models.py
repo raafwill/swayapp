@@ -117,6 +117,7 @@ class Product(models.Model):
         verbose_name='marca'
     )
     product = models.CharField('Produto', max_length=100, unique=True)
+    multiplo = models.IntegerField('multiplo')
     sell_price = models.DecimalField('Preço venda', max_digits=7, decimal_places=2, default=0)
     received_by = models.ForeignKey(User, max_length=50, blank=True, null=True, on_delete=models.CASCADE)
     received = models.IntegerField(default='0', blank=False, null=True)
@@ -205,6 +206,7 @@ class SaleDetail(models.Model):
         verbose_name='produto',
         on_delete=models.CASCADE
     )
+
     quantity = models.PositiveSmallIntegerField('quantidade')
     price_sale = models.DecimalField(
         'Preço de venda',
@@ -243,6 +245,8 @@ class ReceivedItems(TimeStampedModel):
     unit_price_payd = models.DecimalField('Custo', max_digits=20, decimal_places=2, default=0)
     quantity_received = models.IntegerField('Quantidade', default='0', blank=False, null=True)
     received_by = models.ForeignKey(User, max_length=50, on_delete=models.CASCADE, blank=True, null=True)
+    multiplo = models.IntegerField('Caixa')
+    multiplo_check = models.BooleanField('Caixa/Multiplo', default=False)
 
     class Meta:
         ordering = ['product']

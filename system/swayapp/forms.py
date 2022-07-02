@@ -22,6 +22,7 @@ class ProductForm(forms.ModelForm):
                   'brand',
                   'product',
                   'stock_min',
+                  'multiplo',
                   'sell_price',
                   'category']
 
@@ -41,13 +42,13 @@ class CategoryForm(forms.ModelForm):
 class ReceivedProduct(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['product', 'received', 'received_price']
+        fields = ['received', 'received_price']
 
 
 class ReceivedItems(forms.ModelForm):
     class Meta:
         model = ReceivedItems
-        exclude = ['product', 'unit_price_payd', 'quantity_received', 'received_by']
+        exclude = ['product', 'unit_price_payd', 'quantity_received', 'received_by', 'multiplo']
 
 class ReportedItems(forms.ModelForm):
     class Meta:
