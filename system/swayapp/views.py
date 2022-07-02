@@ -113,7 +113,10 @@ def receive_product(request, pk):
 
 
         receiving.received_by = instance.received_by
-        receiving.quantity_received = instance.received
+        if receiving.multiplo_check == True:
+            receiving.quantity_received = instance.received * instance.multiplo
+        else:
+            receiving.quantity_received = instance.received
 
         instance.save()
         receiving.save()
