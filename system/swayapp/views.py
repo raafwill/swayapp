@@ -109,9 +109,6 @@ def receive_product(request, pk):
         receiving.product = instance.product
         receiving.multiplo = instance.multiplo
 
-
-
-
         receiving.received_by = instance.received_by
         if receiving.multiplo_check == True:
             receiving.quantity_received = instance.received * instance.multiplo

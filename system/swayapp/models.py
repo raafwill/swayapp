@@ -95,6 +95,16 @@ class Brand(models.Model):
         return self.brand
 
 
+class CreateDamage(models.Model):
+    damage_kind = models.TextField('Tipo de Avaria')
+
+    class Meta:
+        verbose_name = 'Avaria'
+        verbose_name_plural = 'Avarias'
+
+    def __str__(self):
+        return self.damage_kind
+
 class Category(models.Model):
     id = models.CharField('Id', max_length=7, primary_key=True)
     category = models.CharField('Categoria', max_length=50, unique=True)
@@ -248,6 +258,7 @@ class ReceivedItems(TimeStampedModel):
     multiplo = models.IntegerField('Caixa')
     multiplo_check = models.BooleanField('Caixa/Multiplo', default=False)
 
+
     class Meta:
         ordering = ['product']
         verbose_name = 'Received'
@@ -272,6 +283,7 @@ class ReportedItems(TimeStampedModel):
     damage_value = models.DecimalField('Custo', max_digits=20, decimal_places=2, default=0)
     quantity_lost = models.IntegerField('Quantidade', default='0', blank=False, null=True)
     reported_by = models.ForeignKey(User, max_length=50, on_delete=models.CASCADE, blank=True, null=True)
+    damage_kind = models.ForeignKey(CreateDamage, on_delete=models.CASCADE, default="PERDA", blank=False, null=False)
 
     class Meta:
         ordering = ['product']
@@ -284,3 +296,7 @@ class ReportedItems(TimeStampedModel):
         return "%03d" % self.id + "/%s" % \
                self.created.strftime("%Y-%m-%d %H:%M:%S") + " - %s " %\
                self.product + "Recebido por: %s " % self.reported_by
+
+
+#model para criação de tipos de avaria
+

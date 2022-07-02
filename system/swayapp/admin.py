@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer, Seller, Product, Brand, Category, ReceivedItems, Sale, SaleDetail, ReportedItems
+from .models import Customer, Seller, Product, Brand, Category, ReceivedItems, Sale, SaleDetail, ReportedItems, CreateDamage
 
 admin.site.register(Customer)
 admin.site.register(Product)
@@ -9,6 +9,7 @@ admin.site.register(ReceivedItems)
 admin.site.register(Sale)
 admin.site.register(SaleDetail)
 admin.site.register(ReportedItems)
+admin.site.register(CreateDamage)
 
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
